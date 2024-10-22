@@ -1,7 +1,14 @@
 services:
+  redis:
+    image: "redis:alpine"
   web:
     build: .
     ports:
       - "8100:5000"
-  redis:
-    image: "redis:alpine"
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /code
+    depends_on:
+      - redis
